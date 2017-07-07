@@ -96,22 +96,25 @@ open class ESRefreshComponent: UIView {
     
     open override func didMoveToSuperview() {
         super.didMoveToSuperview()
-        self.scrollView = self.superview as? UIScrollView
-        if let _ = animator {
-            let v = animator.view
-            if v.superview == nil {
-                let inset = animator.insets
-                self.addSubview(v)
-                v.frame = CGRect.init(x: inset.left,
-                                      y: inset.right,
-                                      width: self.bounds.size.width - inset.left - inset.right,
-                                      height: self.bounds.size.height - inset.top - inset.bottom)
-                v.autoresizingMask = [
-                    .flexibleWidth,
-                    .flexibleTopMargin,
-                    .flexibleHeight,
-                    .flexibleBottomMargin
-                ]
+
+        if self.superview != nil {
+            self.scrollView = self.superview as? UIScrollView
+            if let _ = animator {
+                let v = animator.view
+                if v.superview == nil {
+                    let inset = animator.insets
+                    self.addSubview(v)
+                    v.frame = CGRect.init(x: inset.left,
+                                          y: inset.right,
+                                          width: self.bounds.size.width - inset.left - inset.right,
+                                          height: self.bounds.size.height - inset.top - inset.bottom)
+                    v.autoresizingMask = [
+                        .flexibleWidth,
+                        .flexibleTopMargin,
+                        .flexibleHeight,
+                        .flexibleBottomMargin
+                    ]
+                }
             }
         }
     }
