@@ -404,17 +404,23 @@ open class ESRefreshFooterView: ESRefreshComponent {
      */
     open override func didMoveToSuperview() {
         super.didMoveToSuperview()
-        DispatchQueue.main.async {
-            [weak self] in
-            guard let weakSelf = self else {
-                return
-            }
-            weakSelf.scrollViewInsets = weakSelf.scrollView?.contentInset ?? UIEdgeInsets.zero
-            weakSelf.scrollView?.contentInset.bottom = weakSelf.scrollViewInsets.bottom + weakSelf.bounds.size.height
-            var rect = weakSelf.frame
-            rect.origin.y = weakSelf.scrollView?.contentSize.height ?? 0.0
-            weakSelf.frame = rect
-        }
+
+        if self.superview != nil {
+	        DispatchQueue.main.async {
+	            [weak self] in
+	            guard let weakSelf = self else {
+	                return
+	            }
+	            weakSelf.scrollViewInsets = weakSelf.scrollView?.contentInset ?? UIEdgeInsets.zero
+	            weakSelf.scrollView?.contentInset.bottom = weakSelf.scrollViewInsets.bottom + weakSelf.bounds.size.height
+	            var rect = weakSelf.frame
+	            rect.origin.y = weakSelf.scrollView?.contentSize.height ?? 0.0
+	            weakSelf.frame = rect
+	        }
+	    } else {
+	    	self.scrollView?.contentInset.bottom = self.scrollViewInsets.bottom
+            self.scrollView = nil
+	    } 
     }
  
     open override func sizeChangeAction(object: AnyObject?, change: [NSKeyValueChangeKey : Any]?) {
